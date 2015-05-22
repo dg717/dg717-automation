@@ -1,0 +1,26 @@
+<tr>
+  <td align="center" colspan="2" style="padding:20px 0 40px;">
+    <% if @company.over_usage?  %>
+      <%= "Dear @company.admin.first_name, your team has used @company.excess hours over the free allowance" %>
+    <% else %>
+      <%=  %>
+    <% end %>
+  </td>
+</tr>
+<tr>
+  <td align="center" colspan="2">Below are the usage breakdowns.</td>
+</tr>
+<% @company.users.each do |user| %>
+  <tr>
+    <td>
+      <%= user.user_name %>
+    </td>
+    <td>
+      <% if user.available_hours > 0 %>
+        <%= "#{8 - user.available_hours.to_i} out of #{user.limited_hours} hours used" %>
+      <% else %>
+        <%= "#{user.available_hours.to_i * -1} hours over used" %>
+      <% end %>
+    </td>
+  </tr>
+<% end %>
