@@ -21,7 +21,7 @@ default: &default
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: 5
   password: password
-  user: postgres
+  user: postgres 
   port: 5432
 
 development:
@@ -84,5 +84,7 @@ test:
 production:
   <<: *default
   database: yaroom_production
- # username: postgres
- # password: <%= ENV['YAROOM_DATABASE_PASSWORD'] %>
+  username: postgres
+  password: password 
+  pool: 20
+# password: <%= ENV['YAROOM_DATABASE_PASSWORD'] %>

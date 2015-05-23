@@ -62,7 +62,8 @@ gem "activeadmin", github: "gregbell/active_admin"
 gem 'sendgrid_toolkit', '>= 1.1.1'
 gem 'sendgrid'
 # Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt', '~> 3.1.7'
+gem 'nokogiri'
 
 # Use unicorn as the app server
 # gem 'unicorn'
