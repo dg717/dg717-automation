@@ -45,7 +45,6 @@ class Meeting < ActiveRecord::Base
     end_time.strftime("%H:%M")
   end
 
-
   def length
     end_time - start_time
   end
