@@ -11,7 +11,7 @@ class Meeting < ActiveRecord::Base
             .limit(4) 
           }
   scope :is_ongoing, ->{  
-            unscoped.where("start_time < '#{self.time_now}' and end_time > '#{self.time_now}'")
+            where("start_time < '#{self.time_now}' and end_time > '#{self.time_now}'")
           }
 
   scope :total, -> {
