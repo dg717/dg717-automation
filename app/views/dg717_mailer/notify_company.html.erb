@@ -1,26 +1,29 @@
 <tr>
-  <td align="center" colspan="2" style="padding:20px 0 40px;">
+  <td align="center" colspan="2" style="padding:40px 0 10px; font-size:1.2em;">
     <% if @company.over_usage?  %>
-      <%= "Dear #{@company.admin.first_name if @company.admin}, your team has used #{@company.excess} hours over the included allowance. You will be invoiced $25 per hour over the allowance." %>
+      <%= "Dear #{@company.admin.first_name unless @company.admin.nil?}, your team has used #{@company.excess} hours over the included allowance of #{@company.monthly_allowance} hours. You will be invoiced $25 per hour over the allowance." %>
     <% else %>
-      <%=  "Dear #{@company.admin.first_name}, your team has almost used the included allowance. You will be invoiced $25 per hour once you go over the allowance."%>
+      <%=  "Dear #{@company.admin.first_name unless @company.admin.nil?}, your team has almost used the included allowance of #{@company.monthly_allowance} hours. You will be invoiced $25 per hour once you go over the allowance."%>
     <% end %>
   </td>
 </tr>
 <tr>
-  <td align="center" colspan="2">Below are the usage breakdowns per your team member.</td>
+  <td align="center" colspan="2" style="padding:30px; font-size: 1.2em;">Below are the usage breakdowns per your team member.</td>
 </tr>
-<% @company.users.each do |user| %>
+  <% @company.users.each do |user| %>
   <tr>
-    <td style="padding:10px;">
+    <td style="padding:10px; font-weight:bold;" align=right>
       <%= user.user_name %>
     </td>
     <td style="padding:10px;">
       <% if user.available_hours > 0 %>
         <%= "#{8 - user.available_hours.to_i} out of #{user.limited_hours} hours used" %>
       <% else %>
+       <span style='color:#EF8263;'>
         <%= "#{user.available_hours.to_i * -1} hours over used" %>
+        </span>
       <% end %>
     </td>
   </tr>
 <% end %>
+  <tr><td colspan="2" style="border-top:1px solid #bbb; font-size:1.2em; margin-top:10px 0 20px 0; padding:10px 0 30px; color:#333;" align=center><%= @company.monthly_usage.round %> hours / <%= @company.monthly_allowance %> hours used</td></tr> 

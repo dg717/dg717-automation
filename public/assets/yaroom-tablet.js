@@ -324,6 +324,7 @@ define('yaroom-tablet/templates/room', ['exports'], function (exports) {
             dom.appendChild(el0, el1);
             var el1 = dom.createElement("div");
             dom.setAttribute(el1,"class","text-center");
+            dom.setAttribute(el1,"style","font-size:0.5em;");
             var el2 = dom.createComment("");
             dom.appendChild(el1, el2);
             var el2 = dom.createTextNode(" - ");
@@ -335,6 +336,7 @@ define('yaroom-tablet/templates/room', ['exports'], function (exports) {
             dom.appendChild(el0, el1);
             var el1 = dom.createElement("div");
             dom.setAttribute(el1,"class","text-center");
+            dom.setAttribute(el1,"style","font-size:0.5em;");
             var el2 = dom.createComment("");
             dom.appendChild(el1, el2);
             dom.appendChild(el0, el1);
@@ -386,8 +388,8 @@ define('yaroom-tablet/templates/room', ['exports'], function (exports) {
           dom.appendChild(el0, el1);
           var el1 = dom.createElement("div");
           dom.setAttribute(el1,"class","col-sm-12");
-          dom.setAttribute(el1,"style","marign:auto; poistion:absolute; top:0; left:0; right:0; bottom:0; text-align:center; font-size:10em; color:white; font-weight:bold;");
-          var el2 = dom.createTextNode("Occpuied\n");
+          dom.setAttribute(el1,"style","marign:auto; poistion:absolute; top:0; left:0; right:0; bottom:0; text-align:center; font-size:8em; color:white; font-weight:bold;");
+          var el2 = dom.createTextNode("Occupied\n");
           dom.appendChild(el1, el2);
           var el2 = dom.createComment("");
           dom.appendChild(el1, el2);
@@ -437,7 +439,7 @@ define('yaroom-tablet/templates/room', ['exports'], function (exports) {
           dom.appendChild(el0, el1);
           var el1 = dom.createElement("div");
           dom.setAttribute(el1,"class","col-sm-12");
-          dom.setAttribute(el1,"style","marign:auto; poistion:absolute; top:0; left:0; right:0; bottom:0; text-align:center; padding:3% 0 5%; font-size:10em; color:white; font-weight:bold;");
+          dom.setAttribute(el1,"style","marign:auto; poistion:absolute; top:0; left:0; right:0; bottom:0; text-align:center; padding:5% 0 5%; font-size:10em; color:white; font-weight:bold;");
           var el2 = dom.createTextNode("Vacant");
           dom.appendChild(el1, el2);
           dom.appendChild(el0, el1);
@@ -478,34 +480,27 @@ define('yaroom-tablet/templates/room', ['exports'], function (exports) {
           hasRendered: false,
           build: function build(dom) {
             var el0 = dom.createDocumentFragment();
-            var el1 = dom.createTextNode("          ");
+            var el1 = dom.createTextNode("            ");
             dom.appendChild(el0, el1);
             var el1 = dom.createElement("div");
-            dom.setAttribute(el1,"class","row");
+            dom.setAttribute(el1,"class","col-sm-4");
+            dom.setAttribute(el1,"style","color:#fff;");
+            var el2 = dom.createElement("span");
+            dom.setAttribute(el2,"style","font-size:1.2em;");
+            var el3 = dom.createComment("");
+            dom.appendChild(el2, el3);
+            dom.appendChild(el1, el2);
+            var el2 = dom.createElement("br");
+            dom.appendChild(el1, el2);
             var el2 = dom.createTextNode("\n            ");
             dom.appendChild(el1, el2);
-            var el2 = dom.createElement("div");
-            dom.setAttribute(el2,"class","col-sm-12");
-            dom.setAttribute(el2,"style","color:#fff;");
-            var el3 = dom.createElement("span");
-            dom.setAttribute(el3,"style","font-size:1.2em;");
-            var el4 = dom.createComment("");
-            dom.appendChild(el3, el4);
-            dom.appendChild(el2, el3);
-            var el3 = dom.createElement("br");
-            dom.appendChild(el2, el3);
-            var el3 = dom.createTextNode("\n            ");
-            dom.appendChild(el2, el3);
-            var el3 = dom.createComment("");
-            dom.appendChild(el2, el3);
-            var el3 = dom.createTextNode(" - ");
-            dom.appendChild(el2, el3);
-            var el3 = dom.createComment("");
-            dom.appendChild(el2, el3);
-            var el3 = dom.createTextNode("\n            ");
-            dom.appendChild(el2, el3);
+            var el2 = dom.createComment("");
             dom.appendChild(el1, el2);
-            var el2 = dom.createTextNode("\n          ");
+            var el2 = dom.createTextNode(" - ");
+            dom.appendChild(el1, el2);
+            var el2 = dom.createComment("");
+            dom.appendChild(el1, el2);
+            var el2 = dom.createTextNode("\n            ");
             dom.appendChild(el1, el2);
             dom.appendChild(el0, el1);
             var el1 = dom.createTextNode("\n");
@@ -532,7 +527,7 @@ define('yaroom-tablet/templates/room', ['exports'], function (exports) {
             } else {
               fragment = this.build(dom);
             }
-            var element0 = dom.childAt(fragment, [1, 1]);
+            var element0 = dom.childAt(fragment, [1]);
             var morph0 = dom.createMorphAt(dom.childAt(element0, [0]),0,0);
             var morph1 = dom.createMorphAt(element0,3,3);
             var morph2 = dom.createMorphAt(element0,5,5);
@@ -556,19 +551,27 @@ define('yaroom-tablet/templates/room', ['exports'], function (exports) {
           dom.appendChild(el0, el1);
           var el1 = dom.createElement("div");
           dom.setAttribute(el1,"class","col-sm-8 col-sm-offset-2");
-          dom.setAttribute(el1,"style","text-align:center; background:rgba(255, 255, 255,0.2); padding:1%; border-radius:20px;");
+          dom.setAttribute(el1,"style","text-align:center; background:rgba(255, 255, 255,0.1); padding:1%; border-radius:20px;");
           var el2 = dom.createTextNode("\n      ");
           dom.appendChild(el1, el2);
           var el2 = dom.createElement("div");
           dom.setAttribute(el2,"class","row");
+          dom.setAttribute(el2,"style","text-align:center; background:rgba(0, 0, 0, 0.05); color:white; margin:10px; border-radius:5px; padding:5px;");
           var el3 = dom.createTextNode("Upcoming Meetings");
           dom.appendChild(el2, el3);
           dom.appendChild(el1, el2);
-          var el2 = dom.createTextNode("\n");
+          var el2 = dom.createTextNode("\n      ");
           dom.appendChild(el1, el2);
-          var el2 = dom.createComment("");
+          var el2 = dom.createElement("div");
+          dom.setAttribute(el2,"class","row");
+          var el3 = dom.createTextNode("\n");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createComment("");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createTextNode("        ");
+          dom.appendChild(el2, el3);
           dom.appendChild(el1, el2);
-          var el2 = dom.createTextNode("      ");
+          var el2 = dom.createTextNode("\n      ");
           dom.appendChild(el1, el2);
           dom.appendChild(el0, el1);
           var el1 = dom.createTextNode("\n");
@@ -595,7 +598,7 @@ define('yaroom-tablet/templates/room', ['exports'], function (exports) {
           } else {
             fragment = this.build(dom);
           }
-          var morph0 = dom.createMorphAt(dom.childAt(fragment, [1]),3,3);
+          var morph0 = dom.createMorphAt(dom.childAt(fragment, [1, 3]),1,1);
           block(env, morph0, context, "each", [get(env, context, "upcomingMeetings")], {}, child0, null);
           return fragment;
         }
@@ -614,11 +617,19 @@ define('yaroom-tablet/templates/room', ['exports'], function (exports) {
         var el2 = dom.createTextNode("\n  ");
         dom.appendChild(el1, el2);
         var el2 = dom.createElement("div");
-        dom.setAttribute(el2,"class","col-sm-12 text-right");
+        dom.setAttribute(el2,"class","col-sm-6 text-left");
+        dom.setAttribute(el2,"style","color:#fff; padding:10px;");
         var el3 = dom.createTextNode("\n    ");
         dom.appendChild(el2, el3);
         var el3 = dom.createComment("");
         dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n  ");
+        dom.appendChild(el2, el3);
+        dom.appendChild(el1, el2);
+        var el2 = dom.createTextNode("\n  ");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createElement("div");
+        dom.setAttribute(el2,"class","col-sm-6 text-right");
         var el3 = dom.createTextNode("\n    ");
         dom.appendChild(el2, el3);
         var el3 = dom.createElement("menu");
@@ -639,16 +650,14 @@ define('yaroom-tablet/templates/room', ['exports'], function (exports) {
         var el4 = dom.createTextNode("\n    ");
         dom.appendChild(el3, el4);
         dom.appendChild(el2, el3);
-        var el3 = dom.createTextNode("\n\n");
-        dom.appendChild(el2, el3);
-        var el3 = dom.createComment("");
-        dom.appendChild(el2, el3);
-        var el3 = dom.createComment("");
-        dom.appendChild(el2, el3);
-        var el3 = dom.createTextNode("  ");
+        var el3 = dom.createTextNode("\n  ");
         dom.appendChild(el2, el3);
         dom.appendChild(el1, el2);
-        var el2 = dom.createTextNode("\n");
+        var el2 = dom.createTextNode("\n\n\n");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createComment("");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createComment("");
         dom.appendChild(el1, el2);
         dom.appendChild(el0, el1);
         return el0;
@@ -674,10 +683,9 @@ define('yaroom-tablet/templates/room', ['exports'], function (exports) {
           fragment = this.build(dom);
         }
         var element2 = dom.childAt(fragment, [0]);
-        var element3 = dom.childAt(element2, [1]);
-        var morph0 = dom.createMorphAt(element3,1,1);
-        var morph1 = dom.createMorphAt(element3,5,5);
-        var morph2 = dom.createMorphAt(element3,6,6);
+        var morph0 = dom.createMorphAt(dom.childAt(element2, [1]),1,1);
+        var morph1 = dom.createMorphAt(element2,5,5);
+        var morph2 = dom.createMorphAt(element2,6,6);
         element(env, element2, context, "bind-attr", [], {"class": "roomStatus"});
         content(env, morph0, context, "model.name");
         block(env, morph1, context, "if", [get(env, context, "model.is_occupied")], {}, child0, child1);
