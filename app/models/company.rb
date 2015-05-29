@@ -17,6 +17,11 @@ class Company < ActiveRecord::Base
     (self.users.virtual.count * VIRTUAL_HOURS) + (self.users.dedicated.count * DEDICATED_HOURS) 
   end
 
+  def excess_usage 
+    #Company's monthly usage in hours
+    self.monthly_usage - self.monthly_allowance
+  end
+
   #return true if the monthly allowance have passed
   def near_limit?
     true if self.monthly_usage > (self.monthly_allowance * 0.8)

@@ -4,7 +4,7 @@ ActiveAdmin.register Company do
   form do |f| 
     f.inputs "Company" do
       f.input :name
-      f.input :admin, :as => :select, :collection => User.all.map {|u| [u.first_name, u.id]}, :include_blank => false
+      f.input :admin, :as => :select, :collection => User.all.order("first_name").map {|u| ["#{u.company.name} - #{u.email}", u.id]}, :include_blank => false
     end
     f.actions
   end
