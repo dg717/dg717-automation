@@ -7,7 +7,7 @@ class Meeting < ActiveRecord::Base
   default_scope { order('start_time') }
 
   scope :for_room, -> { 
-            where("end_time >= '#{self.time_now}' and start_time <= '#{Time.now.end_of_day.in_time_zone(TIMEZONE)}'") 
+            where("end_time >= '#{self.time_now}' and start_time <= '#{Time.now.in_time_zone(TIMEZONE).end_of_day}'") 
           }
   scope :is_ongoing, ->{  
             where("start_time < '#{self.time_now}' and end_time > '#{self.time_now}'")
