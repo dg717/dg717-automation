@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
   end
 
   def available_hours
-    self.limited_hours - self.meetings.total/3600
+    (self.limited_hours - self.meetings.total/3600).to_i.round
   end
 
   def limited_hours
@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
   end
 
   def used_hours
-    self.meetings.total/3600
+    (self.meetings.total/3600).to_i.round
   end
 
   def excess_usage
