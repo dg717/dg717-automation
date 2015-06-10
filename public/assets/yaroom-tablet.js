@@ -31,6 +31,16 @@ define('yaroom-tablet/app', ['exports', 'ember', 'ember/resolver', 'ember/load-i
   exports['default'] = App;
 
 });
+define('yaroom-tablet/components/upcoming-meetings', ['exports', 'ember'], function (exports, Ember) {
+
+  'use strict';
+
+  exports['default'] = Ember['default'].Component.extend({
+    upcomingMeetings: (function () {
+      return this.get('model.meetings').filterProperty('is_now', false).slice(0, 3);
+    }).property('upcomingMeetings') });
+
+});
 define('yaroom-tablet/controllers/array', ['exports', 'ember'], function (exports, Ember) {
 
 	'use strict';
@@ -69,7 +79,7 @@ define('yaroom-tablet/controllers/room', ['exports', 'ember'], function (exports
         localTime: moment().format('HH:mm:ss'),
         //new Date().toLocaleTimeString(),
         currentMeeting: (function () {
-            return this.get('model.meetings').filterProperty('is_now', true).slice(0, 1);
+            return this.get('model.meetings').filterProperty('is_now').slice(0, 1);
         }).property('model.meetings'),
 
         upcomingMeetings: (function () {
@@ -261,11 +271,6 @@ define('yaroom-tablet/routes/room', ['exports', 'ember'], function (exports, Emb
   'use strict';
 
   exports['default'] = Ember['default'].Route.extend({
-    queryParams: {
-      room_id: {
-        refreshModel: true
-      }
-    },
     model: function model(params) {
       var room = this.store.find('room', params.room_id);
       return room;
@@ -348,6 +353,83 @@ define('yaroom-tablet/templates/application', ['exports'], function (exports) {
         var morph0 = dom.createMorphAt(fragment,0,0,contextualElement);
         dom.insertBoundary(fragment, 0);
         content(env, morph0, context, "outlet");
+        return fragment;
+      }
+    };
+  }()));
+
+});
+define('yaroom-tablet/templates/components/upcoming-meetings', ['exports'], function (exports) {
+
+  'use strict';
+
+  exports['default'] = Ember.HTMLBars.template((function() {
+    return {
+      isHTMLBars: true,
+      revision: "Ember@1.12.0",
+      blockParams: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      build: function build(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createElement("div");
+        dom.setAttribute(el1,"class","text-center");
+        dom.setAttribute(el1,"style","color:#333; background-color:#f3f3f3; padding:10px; margin:10px;");
+        var el2 = dom.createTextNode("\n");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createElement("span");
+        dom.setAttribute(el2,"style","font-size:1.4em; font-weight:bold;");
+        var el3 = dom.createComment("");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode(" - ");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createComment("");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode(" ");
+        dom.appendChild(el2, el3);
+        dom.appendChild(el1, el2);
+        var el2 = dom.createElement("br");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createTextNode(" \n");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createElement("span");
+        dom.setAttribute(el2,"style","font-size:1.2em");
+        var el3 = dom.createComment("");
+        dom.appendChild(el2, el3);
+        dom.appendChild(el1, el2);
+        var el2 = dom.createTextNode("            \n");
+        dom.appendChild(el1, el2);
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      render: function render(context, env, contextualElement) {
+        var dom = env.dom;
+        var hooks = env.hooks, content = hooks.content;
+        dom.detectNamespace(contextualElement);
+        var fragment;
+        if (env.useFragmentCache && dom.canClone) {
+          if (this.cachedFragment === null) {
+            fragment = this.build(dom);
+            if (this.hasRendered) {
+              this.cachedFragment = fragment;
+            } else {
+              this.hasRendered = true;
+            }
+          }
+          if (this.cachedFragment) {
+            fragment = dom.cloneNode(this.cachedFragment, true);
+          }
+        } else {
+          fragment = this.build(dom);
+        }
+        var element0 = dom.childAt(fragment, [0]);
+        var element1 = dom.childAt(element0, [1]);
+        var morph0 = dom.createMorphAt(element1,0,0);
+        var morph1 = dom.createMorphAt(element1,2,2);
+        var morph2 = dom.createMorphAt(dom.childAt(element0, [4]),0,0);
+        content(env, morph0, context, "meeting.display_start");
+        content(env, morph1, context, "meeting.display_end");
+        content(env, morph2, context, "meeting.user.company_name");
         return fragment;
       }
     };
@@ -520,107 +602,51 @@ define('yaroom-tablet/templates/room', ['exports'], function (exports) {
       };
     }());
     var child2 = (function() {
-      var child0 = (function() {
-        return {
-          isHTMLBars: true,
-          revision: "Ember@1.12.0",
-          blockParams: 1,
-          cachedFragment: null,
-          hasRendered: false,
-          build: function build(dom) {
-            var el0 = dom.createDocumentFragment();
-            var el1 = dom.createTextNode("            ");
-            dom.appendChild(el0, el1);
-            var el1 = dom.createElement("div");
-            dom.setAttribute(el1,"class","text-center");
-            dom.setAttribute(el1,"style","color:#333; background-color:#f3f3f3; padding:10px; margin:10px;");
-            var el2 = dom.createElement("span");
-            dom.setAttribute(el2,"style","font-size:1.4em; font-weight:bold;");
-            var el3 = dom.createComment("");
-            dom.appendChild(el2, el3);
-            var el3 = dom.createTextNode(" - ");
-            dom.appendChild(el2, el3);
-            var el3 = dom.createComment("");
-            dom.appendChild(el2, el3);
-            var el3 = dom.createTextNode(" ");
-            dom.appendChild(el2, el3);
-            dom.appendChild(el1, el2);
-            var el2 = dom.createElement("br");
-            dom.appendChild(el1, el2);
-            var el2 = dom.createTextNode(" ");
-            dom.appendChild(el1, el2);
-            var el2 = dom.createElement("span");
-            dom.setAttribute(el2,"style","font-size:1.2em");
-            var el3 = dom.createComment("");
-            dom.appendChild(el2, el3);
-            dom.appendChild(el1, el2);
-            var el2 = dom.createTextNode("            \n            ");
-            dom.appendChild(el1, el2);
-            dom.appendChild(el0, el1);
-            var el1 = dom.createTextNode("\n");
-            dom.appendChild(el0, el1);
-            return el0;
-          },
-          render: function render(context, env, contextualElement, blockArguments) {
-            var dom = env.dom;
-            var hooks = env.hooks, set = hooks.set, content = hooks.content;
-            dom.detectNamespace(contextualElement);
-            var fragment;
-            if (env.useFragmentCache && dom.canClone) {
-              if (this.cachedFragment === null) {
-                fragment = this.build(dom);
-                if (this.hasRendered) {
-                  this.cachedFragment = fragment;
-                } else {
-                  this.hasRendered = true;
-                }
-              }
-              if (this.cachedFragment) {
-                fragment = dom.cloneNode(this.cachedFragment, true);
-              }
-            } else {
-              fragment = this.build(dom);
-            }
-            var element0 = dom.childAt(fragment, [1]);
-            var element1 = dom.childAt(element0, [0]);
-            var morph0 = dom.createMorphAt(element1,0,0);
-            var morph1 = dom.createMorphAt(element1,2,2);
-            var morph2 = dom.createMorphAt(dom.childAt(element0, [3]),0,0);
-            set(env, context, "meeting", blockArguments[0]);
-            content(env, morph0, context, "meeting.display_start");
-            content(env, morph1, context, "meeting.display_end");
-            content(env, morph2, context, "meeting.user.company_name");
-            return fragment;
-          }
-        };
-      }());
       return {
         isHTMLBars: true,
         revision: "Ember@1.12.0",
-        blockParams: 0,
+        blockParams: 1,
         cachedFragment: null,
         hasRendered: false,
         build: function build(dom) {
           var el0 = dom.createDocumentFragment();
-          var el1 = dom.createTextNode("      ");
+          var el1 = dom.createTextNode("          ");
           dom.appendChild(el0, el1);
           var el1 = dom.createElement("div");
-          dom.setAttribute(el1,"class","row");
-          dom.setAttribute(el1,"style","background-color:#fff; height:100vh;");
-          var el2 = dom.createTextNode("\n");
+          dom.setAttribute(el1,"class","text-center");
+          dom.setAttribute(el1,"style","color:#333; background-color:#f3f3f3; padding:10px; margin:10px;");
+          var el2 = dom.createTextNode("\n          ");
           dom.appendChild(el1, el2);
-          var el2 = dom.createComment("");
+          var el2 = dom.createElement("span");
+          dom.setAttribute(el2,"style","font-size:1.4em; font-weight:bold;");
+          var el3 = dom.createComment("");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createTextNode(" - ");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createComment("");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createTextNode(" ");
+          dom.appendChild(el2, el3);
           dom.appendChild(el1, el2);
-          var el2 = dom.createTextNode("      ");
+          var el2 = dom.createElement("br");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createTextNode(" \n          ");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createElement("span");
+          dom.setAttribute(el2,"style","font-size:1.2em");
+          var el3 = dom.createComment("");
+          dom.appendChild(el2, el3);
+          dom.appendChild(el1, el2);
+          var el2 = dom.createTextNode("            \n          ");
           dom.appendChild(el1, el2);
           dom.appendChild(el0, el1);
           var el1 = dom.createTextNode("\n");
           dom.appendChild(el0, el1);
           return el0;
         },
-        render: function render(context, env, contextualElement) {
+        render: function render(context, env, contextualElement, blockArguments) {
           var dom = env.dom;
-          var hooks = env.hooks, get = hooks.get, block = hooks.block;
+          var hooks = env.hooks, set = hooks.set, content = hooks.content;
           dom.detectNamespace(contextualElement);
           var fragment;
           if (env.useFragmentCache && dom.canClone) {
@@ -638,8 +664,15 @@ define('yaroom-tablet/templates/room', ['exports'], function (exports) {
           } else {
             fragment = this.build(dom);
           }
-          var morph0 = dom.createMorphAt(dom.childAt(fragment, [1]),1,1);
-          block(env, morph0, context, "each", [get(env, context, "upcomingMeetings")], {}, child0, null);
+          var element0 = dom.childAt(fragment, [1]);
+          var element1 = dom.childAt(element0, [1]);
+          var morph0 = dom.createMorphAt(element1,0,0);
+          var morph1 = dom.createMorphAt(element1,2,2);
+          var morph2 = dom.createMorphAt(dom.childAt(element0, [4]),0,0);
+          set(env, context, "meeting", blockArguments[0]);
+          content(env, morph0, context, "meeting.display_start");
+          content(env, morph1, context, "meeting.display_end");
+          content(env, morph2, context, "meeting.user.company_name");
           return fragment;
         }
       };
@@ -653,12 +686,11 @@ define('yaroom-tablet/templates/room', ['exports'], function (exports) {
         hasRendered: false,
         build: function build(dom) {
           var el0 = dom.createDocumentFragment();
-          var el1 = dom.createTextNode("      ");
+          var el1 = dom.createTextNode("          ");
           dom.appendChild(el0, el1);
           var el1 = dom.createElement("div");
-          dom.setAttribute(el1,"class","row");
-          dom.setAttribute(el1,"style","height:100vh; text-align:center; padding-top:100px; color:#666; font-size:1.2em;");
-          var el2 = dom.createTextNode("\n        No upcoming meetings today.\n      ");
+          dom.setAttribute(el1,"style","text-align:center; padding-top:100px; color:#666; font-size:1.2em;");
+          var el2 = dom.createTextNode("\n            No upcoming meetings today.\n          ");
           dom.appendChild(el1, el2);
           dom.appendChild(el0, el1);
           var el1 = dom.createTextNode("      \n");
@@ -722,7 +754,7 @@ define('yaroom-tablet/templates/room', ['exports'], function (exports) {
         dom.appendChild(el0, el1);
         var el1 = dom.createElement("div");
         dom.setAttribute(el1,"class","col-sm-3");
-        dom.setAttribute(el1,"style","background-color:#fff;");
+        dom.setAttribute(el1,"style","background-color:#fff; height:100vh;");
         var el2 = dom.createTextNode("\n  ");
         dom.appendChild(el1, el2);
         var el2 = dom.createElement("div");
@@ -757,14 +789,22 @@ define('yaroom-tablet/templates/room', ['exports'], function (exports) {
         var el2 = dom.createTextNode("  \n  ");
         dom.appendChild(el1, el2);
         var el2 = dom.createElement("div");
-        dom.setAttribute(el2,"class","row");
         dom.setAttribute(el2,"style","text-align:center; background:rgba(0, 0, 0, 0.9); color:white; padding:20px 0 20px 0; margin-top:20px; font-size:1.4em; font-weight:bold;");
         var el3 = dom.createTextNode("UPCOMING");
         dom.appendChild(el2, el3);
         dom.appendChild(el1, el2);
-        var el2 = dom.createTextNode("\n");
+        var el2 = dom.createTextNode("\n      ");
         dom.appendChild(el1, el2);
-        var el2 = dom.createComment("");
+        var el2 = dom.createElement("div");
+        dom.setAttribute(el2,"style","background-color:#fff;");
+        var el3 = dom.createTextNode("\n");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createComment("");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("      ");
+        dom.appendChild(el2, el3);
+        dom.appendChild(el1, el2);
+        var el2 = dom.createTextNode("\n");
         dom.appendChild(el1, el2);
         dom.appendChild(el0, el1);
         return el0;
@@ -796,13 +836,13 @@ define('yaroom-tablet/templates/room', ['exports'], function (exports) {
         var morph1 = dom.createMorphAt(dom.childAt(element4, [1, 1]),0,0);
         var morph2 = dom.createMorphAt(element5,0,0);
         var morph3 = dom.createMorphAt(element5,1,1);
-        var morph4 = dom.createMorphAt(element4,7,7);
+        var morph4 = dom.createMorphAt(dom.childAt(element4, [7]),1,1);
         element(env, element3, context, "bind-attr", [], {"class": "roomStatus :col-sm-9 :text-left"});
         block(env, morph0, context, "if", [get(env, context, "model.is_occupied")], {}, child0, child1);
         content(env, morph1, context, "localTime");
         inline(env, morph2, context, "moment", [get(env, context, "date"), "ddd, MMM Do"], {});
         content(env, morph3, context, "day");
-        block(env, morph4, context, "if", [get(env, context, "upcomingMeetings")], {}, child2, child3);
+        block(env, morph4, context, "each", [get(env, context, "upcomingMeetings")], {}, child2, child3);
         return fragment;
       }
     };
@@ -1300,7 +1340,7 @@ define('yaroom-tablet/templates/rooms', ['exports'], function (exports) {
             fragment = this.build(dom);
           }
           var morph0 = dom.createMorphAt(dom.childAt(fragment, [1]),1,1);
-          block(env, morph0, context, "link-to", ["room", get(env, context, "this")], {"class": "btn btn-primary ptn-lg btn-block"}, child0, null);
+          block(env, morph0, context, "link-to", ["room", get(env, context, "this.id")], {"class": "btn btn-primary ptn-lg btn-block"}, child0, null);
           return fragment;
         }
       };
@@ -1393,6 +1433,16 @@ define('yaroom-tablet/tests/app.jshint', function () {
   module('JSHint - .');
   test('app.js should pass jshint', function() { 
     ok(true, 'app.js should pass jshint.'); 
+  });
+
+});
+define('yaroom-tablet/tests/components/upcoming-meetings.jshint', function () {
+
+  'use strict';
+
+  module('JSHint - components');
+  test('components/upcoming-meetings.js should pass jshint', function() { 
+    ok(true, 'components/upcoming-meetings.js should pass jshint.'); 
   });
 
 });
@@ -1583,6 +1633,38 @@ define('yaroom-tablet/tests/unit/adapters/application-test.jshint', function () 
   module('JSHint - unit/adapters');
   test('unit/adapters/application-test.js should pass jshint', function() { 
     ok(true, 'unit/adapters/application-test.js should pass jshint.'); 
+  });
+
+});
+define('yaroom-tablet/tests/unit/components/upcoming-meetings-test', ['ember-qunit'], function (ember_qunit) {
+
+  'use strict';
+
+  ember_qunit.moduleForComponent('upcoming-meetings', 'Unit | Component | upcoming meetings', {});
+
+  ember_qunit.test('it renders', function (assert) {
+    assert.expect(2);
+
+    // Creates the component instance
+    var component = this.subject();
+    assert.equal(component._state, 'preRender');
+
+    // Renders the component to the page
+    this.render();
+    assert.equal(component._state, 'inDOM');
+  });
+
+  // Specify the other units that are required for this test
+  // needs: ['component:foo', 'helper:bar']
+
+});
+define('yaroom-tablet/tests/unit/components/upcoming-meetings-test.jshint', function () {
+
+  'use strict';
+
+  module('JSHint - unit/components');
+  test('unit/components/upcoming-meetings-test.js should pass jshint', function() { 
+    ok(true, 'unit/components/upcoming-meetings-test.js should pass jshint.'); 
   });
 
 });
@@ -1842,6 +1924,23 @@ define('yaroom-tablet/tests/unit/views/rooms-test.jshint', function () {
   test('unit/views/rooms-test.js should pass jshint', function() { 
     ok(true, 'unit/views/rooms-test.js should pass jshint.'); 
   });
+
+});
+define('yaroom-tablet/tests/views/room.jshint', function () {
+
+  'use strict';
+
+  module('JSHint - views');
+  test('views/room.js should pass jshint', function() { 
+    ok(true, 'views/room.js should pass jshint.'); 
+  });
+
+});
+define('yaroom-tablet/views/room', ['exports', 'ember'], function (exports, Ember) {
+
+	'use strict';
+
+	exports['default'] = Ember['default'].View.extend({});
 
 });
 /* jshint ignore:start */

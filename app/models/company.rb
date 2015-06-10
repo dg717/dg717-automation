@@ -24,7 +24,7 @@ class Company < ActiveRecord::Base
 
   #return true if the monthly allowance have passed
   def near_limit?
-    true if self.monthly_usage > (self.monthly_allowance * 0.8)
+    true if self.monthly_usage > (self.monthly_allowance * 0.9)
   end
 
   def over_usage?
