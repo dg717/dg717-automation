@@ -731,7 +731,7 @@ define('yaroom-tablet/templates/room', ['exports'], function (exports) {
         var el1 = dom.createTextNode("\n");
         dom.appendChild(el0, el1);
         var el1 = dom.createElement("div");
-        dom.setAttribute(el1,"style","color:#fff; height:105vh;");
+        dom.setAttribute(el1,"style","color:#fff; height:102vh;");
         var el2 = dom.createTextNode("\n");
         dom.appendChild(el1, el2);
         var el2 = dom.createComment("//  <div class='row text-left'>\n  <menu>\n    <a style='font-size:1.5em; margin:0px; color:#fff; margin:-5px 0 0 -20px;' href=\"/\">\n      <i class='fa fa-navicon'></i>\n    </a> {{model.name}}\n  </menu>\n  </div> //");
@@ -754,7 +754,7 @@ define('yaroom-tablet/templates/room', ['exports'], function (exports) {
         dom.appendChild(el0, el1);
         var el1 = dom.createElement("div");
         dom.setAttribute(el1,"class","col-sm-3");
-        dom.setAttribute(el1,"style","background-color:#fff; height:105vh;");
+        dom.setAttribute(el1,"style","background-color:#fff; height:102vh;");
         var el2 = dom.createTextNode("\n  ");
         dom.appendChild(el1, el2);
         var el2 = dom.createElement("div");
