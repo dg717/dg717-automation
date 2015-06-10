@@ -26,4 +26,12 @@ class User < ActiveRecord::Base
     eval((self.membership + "_hours").upcase)
   end
 
+  def used_hours
+    self.meetings.total/3600
+  end
+
+  def excess_usage
+    available_hours * -1
+  end
+
 end
