@@ -19,8 +19,19 @@ ActiveAdmin.register_page "Dashboard" do
             Company.find_each do |company|
               table
                 tr
-                  td company.name
-                  td "#{company.monthly_usage} / #{company.monthly_allowance} used"
+                  div do 
+                    div do 
+                      h4 company.name 
+                      div style:"background-color:rgba(0,0,0,0.3); padding:10px; width:600px; border-radius:20px;" do 
+                        span style: "font-size:1.5em; color:white;" do
+                          "#{company.monthly_usage} / #{company.monthly_allowance} used"
+                        end
+                        div style:"max-width: #{company.monthly_usage.to_f/company.monthly_allowance.to_f * 100}%; background-color:#{company.over_usage? ? "red" : "green"}; padding:10px; border-radius:15px;" do 
+                          "　"
+                        end
+                      end
+                    end
+                  end 
             end
           end
         end
