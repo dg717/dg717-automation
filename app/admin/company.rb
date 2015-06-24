@@ -1,13 +1,6 @@
 ActiveAdmin.register Company do
-  permit_params :id, :name, :full_name, :description, :tel, :created_at, :updated_at
+  permit_params :id, :name, :full_name, :description, :tel, :created_at, :updated_at, :admin
 
-  form do |f| 
-    f.inputs "Company" do
-      f.input :name
-      f.input :admin, :as => :select, :collection => User.all.order("first_name").map {|u| ["#{u.company.name} - #{u.email}", u.id]}, :include_blank => false
-    end
-    f.actions
-  end
   # See permitted parameters documentation:
   # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
   #
