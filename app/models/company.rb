@@ -2,7 +2,7 @@ class Company < ActiveRecord::Base
   has_many :users
   has_one :tracking, dependent: :destroy
   has_many :meetings, through: :users
-  belongs_to :admin, class_name: "User", foreign_key: "user_id"
+  belongs_to :user
 
   delegate :last_sent, to: :tracking
   delegate :last_total, to: :tracking
@@ -42,6 +42,11 @@ class Company < ActiveRecord::Base
   end
 
   def send_email?
+    if self.last_sent.nil?
+      puts "calling create_tracking"
+      self.create_tracking
+    end
+    puts "after if"
     (self.monthly_usage.to_i > self.last_total.to_i && self.last_sent < 2.days.ago) ? true : false
   end
 
