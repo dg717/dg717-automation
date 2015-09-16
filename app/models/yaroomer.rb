@@ -59,8 +59,8 @@ class Yaroomer
   def get_meetings
     start_date = (Date.today-1).strftime("%F")
     end_date = (Date.today+29).strftime("%F")
-    interval = "#{start_date}..#{end_date} run at #{Time.now}" 
-    puts interval
+    interval = "#{start_date}..#{end_date}" 
+    puts "#{interval} run at #{Time.now}"
     response = self.class.get('/meetings', headers: {"X-TOKEN" => @token}, query: {"scope[where]" => "location:#{@@location}","scope[when]" => "interval:#{interval}","perPage" => 1000})
     self.valid_response?(response) ? self.save_meetings(response) : self.handle_failure(response)
   end

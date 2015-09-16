@@ -3,12 +3,12 @@
     <p>This is a test e-mail about the meeting room usage. The charge will not incure until we roll the service in July.</p>
     <% if @mode = 0 %>
       <% if @company.over_usage?  %>
-        <%= "Dear #{@company.admin.first_name unless @company.admin.nil?}, your team at #{@company.name} has used #{@company.excess_usage} hours over the included allowance of #{@company.monthly_allowance} hours. You will be invoiced $25 per hour over the allowance." %>
+        <%= "Dear #{@company.user.first_name unless @company.user.nil?}, your team at #{@company.name} has used #{@company.excess_usage} hours over the included allowance of #{@company.monthly_allowance} hours. You will be invoiced $25 per hour over the allowance." %>
       <% else %>
-        <%=  "Dear #{@company.admin.first_name unless @company.admin.nil?}, your team at #{@company.name} has almost used the included allowance of #{@company.monthly_allowance} hours. You will be invoiced $25 per hour once you go over the allowance."%>
+        <%=  "Dear #{@company.user.first_name unless @company.user.nil?}, your team at #{@company.name} has almost used the included allowance of #{@company.monthly_allowance} hours. You will be invoiced $25 per hour once you go over the allowance."%>
       <% end %> 
     <% else %> 
-      <%=  "Dear #{@company.admin.first_name unless @company.admin.nil?}, Below are usage by each of your team member in your company #{@company.name}. You will be invoiced $25 per hour once you go over the allowance for the company."%>      
+      <%=  "Dear #{@company.user.first_name unless @company.user.nil?}, Below are usage by each of your team member in your company #{@company.name}. You will be invoiced $25 per hour once you go over the allowance for the company."%>      
     <% end %>
   </td>
 </tr>
