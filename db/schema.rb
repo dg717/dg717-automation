@@ -62,6 +62,8 @@ ActiveRecord::Schema.define(version: 20150610022041) do
     t.boolean  "chargeable",  default: true
   end
 
+  add_index "companies", ["user_id"], name: "index_companies_on_user_id", using: :btree
+
   create_table "meetings", force: true do |t|
     t.integer  "user_id"
     t.integer  "room_id"
