@@ -88,7 +88,7 @@ class Yaroomer
   def update_meetings(meeting, response)
     #if the meeting is deleted within 4 hours then 
     if response["data"]["list"].blank?
-      meeting.flag_deleted = true
+      meeting.deleted = true
       meeting.save
     end
   end
