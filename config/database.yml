@@ -86,5 +86,5 @@ production:
   database: yaroom_production
   username: postgres
   password: password 
-  pool: 20
+  pool: 10
 # password: <%= ENV['YAROOM_DATABASE_PASSWORD'] %>

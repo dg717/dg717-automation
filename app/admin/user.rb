@@ -14,10 +14,10 @@ ActiveAdmin.register User do
   #   permitted
   # end
 
-  index do 
+index do 
     column :id
     column :email
-    column("user"){|u| u.first_name + " " + u.lsat_name }
+    column("user"){|u| u.first_name + " " + u.last_name }
     column("company"){|u| u.company.name}
     column("desk_type"){|u| u.desk_type == 0 ? "fulltime" : "parttime"}
     actions
@@ -28,9 +28,9 @@ ActiveAdmin.register User do
         f.input :first_name
         f.input :last_name
         f.input :email
-        f.input :company, :label => "company", :as => :select, :collection => Company.find_all.map{|c| [c.name, c.id]}
+f.input :desk_type
+        f.input :company, :label => "company", :as => :select, :collection => Company.all.map{|c| [c.name, c.id]}
         actions
       end
   end
-
 end
