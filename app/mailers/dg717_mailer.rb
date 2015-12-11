@@ -5,7 +5,7 @@ class Dg717Mailer < ActionMailer::Base
     @company = Company.find(company_id)
     subject = get_subject(@company)
     @mode = mode
-    mail(to:@company.user.email, bcc:"schubert-shida@garage.co.jp" subject:subject)
+    mail(to:@company.user.email, bcc:"schubert-shida@garage.co.jp", subject:subject)
     #mail(to:"schubert-shida@garage.co.jp", subject:subject)
     mail.deliver!
   end
