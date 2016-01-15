@@ -1,0 +1,69 @@
+<%= form_for(@event) do |f| %>
+  <% if @event.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@event.errors.count, "error") %> prohibited this event from being saved:</h2>
+
+      <ul>
+      <% @event.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="form-group">
+    <%= f.label :type %><br>
+    <script language="javascript">
+      function hideFlds(sel){
+        $('.form-group').show();
+        if(sel.value == 5){
+          $('.company').hide();
+        } else if (sel.value == 3) {
+          $('.happy').hide();
+        } else if (sel.value == 2) {
+          $('.popup').hide();
+        }
+      };
+    </script>
+    <select name='event[event_type]' onchange="hideFlds(this);">
+    <%= options_for_select([["Event",1],["Popup",2],["Happy Hour",3],["Party",4],["New Tenant",5]])%>
+    </select>
+  </div>
+  <div id="fields">
+  <div class="form-group">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="form-group">
+    <%= f.label :from %><br>
+    <%= f.date_select :start_date %> <%= f.time_select :start_time %>
+  </div>
+  <div class="form-group company happy">
+    <%= f.label :to %><br>
+    <%= f.date_select :end_date %> <%= f.time_select :end_time,:class=>'events'%>
+  </div>
+  <div class="form-group company popup">
+    <%= f.label :space %><br>
+    <select name='type'>
+    <%= options_for_select([["EventSpace",1],["Popup",2],["MeetingRoom,3"]])%>
+    </select>
+  </div>
+  <div class="form-group">
+    <%= f.label :description %><br>
+    <%= f.text_area :description %>
+  </div>
+  <div class="form-group happy">
+    <%= f.label :subtext %><br>
+    <%= f.text_area :subtext %>
+  </div>
+  <div class="form-group">
+    <%= f.label :image %><br>
+      <div class="form_controls">
+        <%= f.file_field :image %>
+        <%= f.hidden_field(:image_cache) %>
+      </div>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+</div>
+<% end %>
