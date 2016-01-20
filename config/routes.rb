@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get '/events/preview' => 'events#preview'
   resources :events
 
   devise_for :admin_users, ActiveAdmin::Devise.config

@@ -7,10 +7,18 @@ class EventsController < InheritedResources::Base
   end
 
   def create
-    Rails.logger.debug("in create")
     @event = Event.new(event_params)
     @event.save
-    respond_with(@event)
+    if @event.event_type == 5
+      @event.start_date = @event.start_date.end_of_month
+      @event.save
+    end
+    redirect_to "/events/"
+  end
+
+  def preview 
+    @events = Event.all
+    render layout: false
   end
 
   def edit
@@ -19,7 +27,7 @@ class EventsController < InheritedResources::Base
   def update
     Rails.logger.debug("in update")
     @event.update(event_params)
-    redirect_to :index
+    redirect_to "/events/"
   end
 
   private
@@ -28,7 +36,7 @@ class EventsController < InheritedResources::Base
     end
 
     def event_params
-      params.require(:event).permit(:name, :from, :to, :type, :description, :subtext, :image, :start_time, :end_time,:image_cache)
+      params.require(:event).permit(:name, :end_date, :start_date, :event_type, :description, :subtext, :image, :start_time, :end_time,:image_cache,:space)
     end
 end
 

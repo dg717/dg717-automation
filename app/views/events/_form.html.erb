@@ -10,37 +10,60 @@
       </ul>
     </div>
   <% end %>
-  <div class="field">
+  <div class="form-group">
     <%= f.label :type %><br>
-    <select name='type'>
-    <%= options_for_select([["Event",1],["Popup",2],["Happy Hour",3],["Party",4]])%>
+    <script language="javascript">
+      function hideFlds(sel){
+        $('.form-group').show();
+        if(sel.value == 5){
+          $('.company').hide();
+        } else if (sel.value == 3) {
+          $('.happy').hide();
+        } else if (sel.value == 2) {
+          $('.popup').hide();
+        }
+      };
+    </script>
+    <select name='event[event_type]' onchange="hideFlds(this);">
+    <%= options_for_select([["Event",1],["Popup",2],["Happy Hour",3],["Party",4],["New Tenant",5]])%>
     </select>
   </div>
-  <div class="field">
+  <div id="fields">
+  <div class="form-group">
     <%= f.label :name %><br>
     <%= f.text_field :name %>
   </div>
-  <div class="field">
+  <div class="form-group">
     <%= f.label :from %><br>
-    <%= f.date_select :from %> <%= f.time_select :start_time %>
+    <%= f.date_select :start_date %> <%= f.time_select :start_time %>
   </div>
-  <div class="field">
+  <div class="form-group company happy">
     <%= f.label :to %><br>
-    <%= f.date_select :to %> <%= f.time_select :end_time %>
+    <%= f.date_select :end_date %> <%= f.time_select :end_time,:class=>'events'%>
   </div>
-  <div class="field">
+  <div class="form-group company popup">
+    <%= f.label :space %><br>
+    <select name='type'>
+    <%= options_for_select([["EventSpace",1],["Popup",2],["MeetingRoom,3"]])%>
+    </select>
+  </div>
+  <div class="form-group">
     <%= f.label :description %><br>
     <%= f.text_area :description %>
   </div>
-  <div class="field">
+  <div class="form-group happy">
     <%= f.label :subtext %><br>
     <%= f.text_area :subtext %>
   </div>
-  <div class="field">
+  <div class="form-group">
     <%= f.label :image %><br>
-    <%= cl_image_upload_tag(:image) %>
-    </div>
+      <div class="form_controls">
+        <%= f.file_field :image %>
+        <%= f.hidden_field(:image_cache) %>
+      </div>
+  </div>
   <div class="actions">
     <%= f.submit %>
   </div>
+</div>
 <% end %>
