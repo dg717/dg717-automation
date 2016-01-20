@@ -20,22 +20,13 @@ default: &default
   # For details on connection pooling, see rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: 5
-<<<<<<< HEAD
   #password: password
-  user: vagrant 
-  #password: postgres
-  #user: postgres 
-=======
-  password: password
-  #user: vagrant 
-  #password: postgres
-  user: postgres 
->>>>>>> 2b70d80bcce42b8e036c0d586a6ff56505f28f40
   port: 5432
 
 development:
   <<: *default
   database: yaroom_development
+  user: vagrant 
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
