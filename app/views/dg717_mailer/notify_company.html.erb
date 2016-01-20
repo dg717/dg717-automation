@@ -1,45 +1,129 @@
+<table class="row">
 <tr>
-  <td align="center" colspan="2" style="padding:40px 0 10px; font-size:1.2em;">
-    <p>This is a test e-mail about the meeting room usage. The charge will not incure until we roll the service in January of 2016.</p>
-    <% if @mode = 0 %>
-      <% if @company.over_usage?  %>
-        <%= "Dear #{@company.user.first_name unless @company.user.nil?}, your team at #{@company.name} has used #{@company.excess_usage} hours over the included allowance of #{@company.monthly_allowance} hours. You will be invoiced $25 per hour over the allowance." %>
-      <% else %>
-        <%=  "Dear #{@company.user.first_name unless @company.user.nil?}, your team at #{@company.name} has almost used the included allowance of #{@company.monthly_allowance} hours. You will be invoiced $25 per hour once you go over the allowance."%>
-      <% end %> 
-    <% else %> 
-      <%=  "Dear #{@company.user.first_name unless @company.user.nil?}, Below are usage by each of your team member in your company #{@company.name}. You will be invoiced $25 per hour once you go over the allowance for the company."%>      
-    <% end %>
+  <td class="wrapper">
+    <table class="twelve columns">
+      <tr>
+        <td class="text-pad">
+          <p>This is a test e-mail about the meeting room usage. The charge will not incure until we roll the service in February of 2016.</p>
+          <p>
+          <% if @mode = 0 %>
+            <% if @company.over_usage?  %>
+              <%= "Dear #{@company.user.first_name unless @company.user.nil?}; <br /><br /> This is to notify you that your team at #{@company.name} has used #{@company.excess_usage} hours over the allowance of #{@company.monthly_allowance} hours. You will be invoiced $25 per hour over the allowance.".html_safe %>
+            <% else %>
+              <%=  "Dear #{@company.user.first_name unless @company.user.nil?}; <br /><br /> This is to notify you that your team at #{@company.name} has almost used the allowance of #{@company.monthly_allowance} hours. You will be invoiced $25 per hour once you go over the allowance.".html_safe%>
+            <% end %> 
+          <% else %> 
+            <%=  "Dear #{@company.user.first_name unless @company.user.nil?}; <br /><br />Below are meeting room usage by each of your team member at #{@company.name}. You will be invoiced $25 per hour once you go over the allowance for your entire company.".html_safe %>      
+          <% end %>
+          </p>
+        </td>
+      </tr>
+    </table>
+  </td>
+</tr>
+
+<tr>
+  <td class="wrapper">
+    <table class="twelve columns">
+      <tr>
+        <td class="text-pad">
+          <p>Below are the usage breakdowns per your team member. It includes the currently reserved hours for all of this month (including future meeting dates).</p>
+        </td>
+      </tr>
+    </table>
   </td>
 </tr>
 <tr>
-  <td align="center" colspan="2" style="padding:30px; font-size: 1.2em;">Below are the usage breakdowns per your team member.<br />It includes the currently reserved hours for this month.</td>
+  <td class="wrapper">
+    <table class="twelve columns">
+      <% @company.users.each do |user| %>
+      <tr>
+        <td class="wrapper">
+          <table class="twelve colums">
+            <tr>
+              <td class='seven sub-columns left-text-pad' style='background-color: #fff;'>
+                <%= user.user_name %>
+              </td>
+                <% if user.available_hours > 0 %>
+                 <td class='five sub-columns left-text-pad' style='background-color: #5da423; color:#fff;'>
+                  <%= "#{user.used_hours.to_i} out of #{user.limited_hours.to_i} hours used" %>
+                 </td>
+                <% else %>
+                 <td class='five sub-columns left-text-pad' style='background-color: #c60f13; color:#fff;'>
+                  <%= "#{user.used_hours.to_i} hours used (#{user.excess_usage.to_i} hours over used)" %>
+                 </td>
+                <% end %>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </td>
 </tr>
 <tr>
-<td align="center" colspan="2" style="padding-bottom:30px;">
-  <table style="background-color: rgba(0,0,0,0.1); border-radius:10px; padding:10px;">
-  <% @company.users.each do |user| %>
-  <tr>
-    <td style="padding:10px; font-weight:bold;" align=right>
-      <%= user.user_name %>
-    </td>
-    <td style="padding:10px;">
-      <% if user.available_hours > 0 %>
-        <%= "#{user.used_hours.to_i} out of #{user.limited_hours.to_i} hours used" %>
-      <% else %>
-       <span style='color:red;'>
-        <%= "#{user.used_hours.to_i} hours used (#{user.excess_usage.to_i} hours over used)" %>
-        </span>
+  <td class="wrapper">
+    <table class="twelve columns">
+      <tr>
+        <td class="text-pad panel center" style='font-size:1.5em; font-weight:bold;'>
+          <%= @company.monthly_usage.round %>/<%= @company.monthly_allowance %> hours used
+        </td>
+      </tr> 
+      <% if @company.over_usage? %>
+      <tr>
+        <td class="text-pad panel center" style='font-size:1.5em; font-weight:bold;'>
+          <%= "#{@company.excess_usage} hours overused" %><br />
+          <%= "#{@company.excess_usage * 25} USD will be invoiced." %>
+        </td>
+      </tr>
       <% end %>
-    </td>
-  </tr>
-  <% end %>
-  <tr><td colspan="2" style="font-size:1.2em; border-top:1px solid #999; padding:10px 0 10px; color:#333;" align=center><%= @company.monthly_usage.round %> hours / <%= @company.monthly_allowance %> hours used</td></tr> 
-  <% if @company.over_usage? %>
-  <tr><td colspan="2" style="font-size:1.2em; padding:10px 0 10px; padding:5px; color:#fff; background-color: rgba(0,0,0,0.5); border-radius:5px;" align=center>
-    <%= "#{@company.excess_usage} overused" %><br />
-    <%= "#{@company.excess_usage * 25} USD will be invoiced." %>
-  </td></tr>
+    </table>
+  </td>
+</tr>
+<tr>
+  <td class="wrapper">
+    <table class="twelve columns">
+      <tr>
+        <td class="text-pad">
+          <p style="margin-top:20px;" align="center">Details of meeting room usage per team members;</p>
+        </td>
+      </tr>
+    </table>
+  </td>
+</tr>
 
-  </table></td></tr>
-  <% end %>
+<tr>
+  <td class="wrapper">
+    <table class="twelve columns">
+      <% @company.users.each do |user| %> 
+        <% if user.used_hours > 0 %>
+        <tr>
+          <td class="wrapper center" style="border-bottom:1px solid #ddd;">
+          <b><%= user.first_name %> <%= user.last_name %></b>
+          </td>
+        </tr>
+        <tr>
+          <td class="wrapper" style='padding-top:10px;'>
+          <% user.meetings.this_month.each do |meeting| %>
+          <table class="twelve columns">
+            <tr>
+              <td class="five sub-columns left-text-pad">
+              <%= meeting.name %>
+              </td>
+              <td class="seven sub-columns left-text-pad">
+              <%= meeting.length / 3600 %>hr(s) on <%= meeting.start_time.strftime("%e/%b/%y from %k:%M") %>
+              <% if meeting.deleted %>
+                <br />Cancelled on <%= meeting.deleted_at %>
+              <% end %>
+              </td>
+            </tr>
+          </table> 
+          <% end %>
+        </td>
+        </tr>
+      <% end %>
+    <% end %>
+    </table>
+  </td>
+</tr>
+</table>
