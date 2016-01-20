@@ -13,7 +13,7 @@ class EventsController < InheritedResources::Base
       @event.start_date = @event.start_date.end_of_month
       @event.save
     end
-    redirect_to "/events/index"
+    redirect_to "/events/"
   end
 
   def preview 
@@ -27,7 +27,7 @@ class EventsController < InheritedResources::Base
   def update
     Rails.logger.debug("in update")
     @event.update(event_params)
-    redirect_to "/events/index"
+    redirect_to "/events/"
   end
 
   private
