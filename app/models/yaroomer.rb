@@ -72,7 +72,7 @@ class Yaroomer
           meeting.update_attributes(start_time: data["start"], end_time: data["end"], name: data["name"], yaroom_updated_at: data["updated_at"],room_id:data["room_id"])
         end
       else
-        Meeting.create!(id:data["id"], start_time: data["start"], end_time: data["end"], name: data["name"], yaroom_updated_at: data["updated_at"],yaroom_id:data["id"],description:data["description"],user_id:data["account_id"],room_id:data["room_id"])
+        Meeting.create!(id:data["id"], deleted: false, start_time: data["start"], end_time: data["end"], name: data["name"], yaroom_updated_at: data["updated_at"],yaroom_id:data["id"],description:data["description"],user_id:data["account_id"],room_id:data["room_id"])
       end
     end    
   end
@@ -88,7 +88,8 @@ class Yaroomer
   def update_meetings(meeting, response)
     #if the meeting is deleted within 4 hours then 
     if response["data"]["list"].blank?
-      meeting.flag_deleted = true
+      meeting.deleted = true
+      meeting.deleted_at = Time.now
       meeting.save
     end
   end

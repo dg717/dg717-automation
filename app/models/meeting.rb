@@ -7,7 +7,7 @@ class Meeting < ActiveRecord::Base
   default_scope { order('start_time') }
 
   scope :for_room, -> { 
-            where("end_time >= '#{self.time_now}' and start_time <= '#{Time.now.in_time_zone(TIMEZONE).end_of_day}' and delete_flag = false") 
+            where("end_time >= '#{self.time_now}' and start_time <= '#{Time.now.in_time_zone(TIMEZONE).end_of_day}' and deleted = false") 
           }
   scope :is_ongoing, ->{  
             where("start_time < '#{self.time_now}' and end_time > '#{self.time_now}'")
@@ -19,6 +19,9 @@ class Meeting < ActiveRecord::Base
           }
   scope :dd, -> {
             where("")
+  }
+  scope :this_month, -> {
+            where("extract(month from now()) = extract(month from start_time) and extract(year from now()) = extract(year from start_time)")
   }
 
   #Return if the meeting is currently on-gogin or not. Returns true or false

@@ -8,7 +8,7 @@ module API
       resource :companies do 
         desc "Return all companies"
         get "", root: :companies do 
-          Company.all 
+          Company.all
         end
       end
     end

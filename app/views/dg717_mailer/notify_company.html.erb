@@ -1,6 +1,6 @@
 <tr>
   <td align="center" colspan="2" style="padding:40px 0 10px; font-size:1.2em;">
-    <p>This is a test e-mail about the meeting room usage. The charge will not incure until we roll the service in July.</p>
+    <p>This is a test e-mail about the meeting room usage. The charge will not incure until we roll the service in January of 2016.</p>
     <% if @mode = 0 %>
       <% if @company.over_usage?  %>
         <%= "Dear #{@company.user.first_name unless @company.user.nil?}, your team at #{@company.name} has used #{@company.excess_usage} hours over the included allowance of #{@company.monthly_allowance} hours. You will be invoiced $25 per hour over the allowance." %>
@@ -13,7 +13,7 @@
   </td>
 </tr>
 <tr>
-  <td align="center" colspan="2" style="padding:30px; font-size: 1.2em;">Below are the usage breakdowns per your team member.</td>
+  <td align="center" colspan="2" style="padding:30px; font-size: 1.2em;">Below are the usage breakdowns per your team member.<br />It includes the currently reserved hours for this month.</td>
 </tr>
 <tr>
 <td align="center" colspan="2" style="padding-bottom:30px;">

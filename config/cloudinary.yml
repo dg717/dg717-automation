@@ -1,19 +1,19 @@
 ---
 development:
-  cloud_name: pitchfunnel
-  api_key: '278218189443232'
-  api_secret: vaR7eWETooQMjlSK4ky02bdEOZU
+  cloud_name: dpxcevibg
+  api_key: '924486791994526'
+  api_secret: sps2uu6ZxtjOXeLi8kZ1nAMVS80
   enhance_image_tag: true
   static_image_support: false
 production:
-  cloud_name: pitchfunnel
-  api_key: '278218189443232'
-  api_secret: vaR7eWETooQMjlSK4ky02bdEOZU
+  cloud_name: dpxcevibg
+  api_key: '924486791994526'
+  api_secret: sps2uu6ZxtjOXeLi8kZ1nAMVS80
   enhance_image_tag: true
   static_image_support: true
 test:
-  cloud_name: pitchfunnel
-  api_key: '278218189443232'
-  api_secret: vaR7eWETooQMjlSK4ky02bdEOZU
+  cloud_name: dpxcevibg
+  api_key: '924486791994526'
+  api_secret: sps2uu6ZxtjOXeLi8kZ1nAMVS80
   enhance_image_tag: true
   static_image_support: false
