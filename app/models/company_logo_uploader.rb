@@ -1,4 +1,4 @@
-class AvatarUploader < CarrierWave::Uploader::Base
+class CompanyLogoUploader < CarrierWave::Uploader::Base
 
   include Cloudinary::CarrierWave
 

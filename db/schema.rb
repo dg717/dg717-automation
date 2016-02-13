@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160120011055) do
+ActiveRecord::Schema.define(version: 20160206013910) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,6 +49,16 @@ ActiveRecord::Schema.define(version: 20160120011055) do
   add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true, using: :btree
   add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
 
+  create_table "card_keys", force: true do |t|
+    t.integer  "user_id"
+    t.string   "key_number"
+    t.integer  "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "card_keys", ["user_id"], name: "index_card_keys_on_user_id", using: :btree
+
   create_table "companies", force: true do |t|
     t.string   "name"
     t.string   "full_name"
@@ -59,7 +69,10 @@ ActiveRecord::Schema.define(version: 20160120011055) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "chargeable",  default: true
+    t.boolean  "chargeable",      default: true
+    t.integer  "company_type"
+    t.string   "logo"
+    t.integer  "special_pricing"
   end
 
   add_index "companies", ["user_id"], name: "index_companies_on_user_id", using: :btree
@@ -79,6 +92,29 @@ ActiveRecord::Schema.define(version: 20160120011055) do
     t.integer  "space"
     t.boolean  "status"
   end
+
+  create_table "external_services", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "envoy_status"
+    t.integer  "yaroom_status"
+    t.integer  "google_status"
+    t.integer  "meraki_status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "external_services", ["user_id"], name: "index_external_services_on_user_id", using: :btree
+
+  create_table "locker_keys", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "key_number"
+    t.integer  "locker_number"
+    t.integer  "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "locker_keys", ["user_id"], name: "index_locker_keys_on_user_id", using: :btree
 
   create_table "meetings", force: true do |t|
     t.integer  "user_id"
@@ -119,6 +155,17 @@ ActiveRecord::Schema.define(version: 20160120011055) do
     t.datetime "updated_at"
   end
 
+  create_table "user_attributes", force: true do |t|
+    t.integer  "user_id"
+    t.text     "interest"
+    t.string   "favorite_color"
+    t.string   "title"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "user_attributes", ["user_id"], name: "index_user_attributes_on_user_id", using: :btree
+
   create_table "users", force: true do |t|
     t.string   "email",      default: "", null: false
     t.string   "first_name", default: "", null: false
@@ -128,6 +175,9 @@ ActiveRecord::Schema.define(version: 20160120011055) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "desk_type",  default: 0
+    t.string   "avatar"
+    t.datetime "start_date"
+    t.datetime "end_date"
   end
 
   add_index "users", ["company_id"], name: "index_users_on_company_id", using: :btree

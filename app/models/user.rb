@@ -1,8 +1,16 @@
 class User < ActiveRecord::Base
   has_many :meetings
   belongs_to :company
+  has_one :user_attributes
+  has_many :card_key
+  has_one :external_service
+
+  accepts_nested_attributes_for :user_attributes, allow_destroy: true
+  accepts_nested_attributes_for :card_key, allow_destroy: true
+  accepts_nested_attributes_for :external_service, allow_destroy: true
 
   delegate :company_name, to: :company
+  mount_uploader :avatar, AvatarUploader
 
   #dedicated desk users
   scope :dedicated, -> {where("desk_type = 0")}
