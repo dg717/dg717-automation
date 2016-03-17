@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'member/index'
+
   get '/events/preview' => 'events#preview'
   resources :events
 

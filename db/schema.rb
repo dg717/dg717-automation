@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160206013910) do
+ActiveRecord::Schema.define(version: 20160316225358) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,6 +73,7 @@ ActiveRecord::Schema.define(version: 20160206013910) do
     t.integer  "company_type"
     t.string   "logo"
     t.integer  "special_pricing"
+    t.integer  "billing_cycle"
   end
 
   add_index "companies", ["user_id"], name: "index_companies_on_user_id", using: :btree
@@ -167,9 +168,9 @@ ActiveRecord::Schema.define(version: 20160206013910) do
   add_index "user_attributes", ["user_id"], name: "index_user_attributes_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
-    t.string   "email",      default: "", null: false
-    t.string   "first_name", default: "", null: false
-    t.string   "last_name",  default: "", null: false
+    t.string   "email",      default: "",   null: false
+    t.string   "first_name", default: "",   null: false
+    t.string   "last_name",  default: "",   null: false
     t.integer  "yaroom_id"
     t.integer  "company_id"
     t.datetime "created_at"
@@ -178,6 +179,7 @@ ActiveRecord::Schema.define(version: 20160206013910) do
     t.string   "avatar"
     t.datetime "start_date"
     t.datetime "end_date"
+    t.boolean  "chargeable", default: true
   end
 
   add_index "users", ["company_id"], name: "index_users_on_company_id", using: :btree
