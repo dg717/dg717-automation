@@ -7,3 +7,4 @@ BLOCK_DAYS = 20
 #Gallery and Event space
 GALLERY = 0
 EVENT_SPACE = 1
+ENV['SLACK_API_TOKEN'] = 'xoxb-27278534227-GhcqztWf3L1c4xDxBozjSo4D'

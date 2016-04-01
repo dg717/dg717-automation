@@ -7,6 +7,8 @@ module API
       mount API::V1::Meetings
       mount API::V1::Users
       mount API::V1::Companies
+      mount API::V1::Events
+      mount API::V1::Zaps
 
       add_swagger_documentation(
           api_version: "v1",

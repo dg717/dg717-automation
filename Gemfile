@@ -1,24 +1,23 @@
 source 'https://rubygems.org'
 ruby '2.2.2'
+gem 'rails', '~> 4.2.4'
 gem 'httparty'
 gem 'devise'
 gem 'whenever'
 gem 'foundation-rails'
 gem 'ember-rails'
 gem 'ember-source', '~> 1.9.0'
-gem 'skylight'
 gem 'mail_view'
 
 gem 'minitest'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.1.7'
 gem 'unicorn'
 # Use postgresql as the database for Active Record
 gem 'pg'
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 4.0.3'
+gem 'sass-rails'
 # Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 1.3.0'
+gem 'uglifier'
 # Use CoffeeScript for .js.coffee assets and views
 #gem 'coffee-rails', '~> 4.0.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
