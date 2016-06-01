@@ -5,7 +5,9 @@ class Event < ActiveRecord::Base
   #type ["Event",1],["Popup",2],["Happy Hour",3],["Party",4],["NewTenant",5]]
 
   def self.for_next_week
-    week = Time.now.next_week
+    #week = Time.now.next_week
+    week = Time.now + 2.week 
+    Rails.logger.debug "week"
     Event.where(start_date:week.beginning_of_week..week.end_of_week, event_type:[1,3,4])
   end
 
