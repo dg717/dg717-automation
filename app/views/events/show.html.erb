@@ -1,39 +1,115 @@
-<p id="notice"><%= notice %></p>
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html class="ie ie6 no-js" lang="en"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie ie7 no-js" lang="en"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie ie8 no-js" lang="en"> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie ie9 no-js" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--><html class="no-js" lang="en"><!--<![endif]-->
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+        <title>DG717 Community Board</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <meta name="description" content="Fullscreen Background Image Slideshow with CSS3 - A Css-only fullscreen background image slideshow" />
+        <meta name="keywords" content="css3, css-only, fullscreen, background, slideshow, images, content" />
+        <meta name="author" content="Codrops" />
+<!--//        <meta http-equiv="refresh" content="300"> //-->
+        <link rel="shortcut icon" href="../favicon.ico"> 
+        <link rel="stylesheet" type="text/css" href="/demo.css" />
+    <script type="text/javascript" src="/modernizr.custom.86080.js"></script>
+    <style type="text/css">
+    .cb-slideshow,
+.cb-slideshow:after { 
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    z-index: 0; 
+}
+.cb-slideshow:after { 
+    content: '';
+    background: transparent url(/pattern.png) repeat top left; 
+}
+      .cb-slideshow li span { 
+          width: 100%;
+          height: 90%;
+          position: absolute;
+          top: 0px;
+          left: 0px;
+          color: transparent;
+          background-size: cover;
+          background-position: 50% 50%;
+          background-repeat: none;
+          opacity: 1;
+          z-index: 0;
+      }
+      .cb-slideshow li div { 
+          z-index: 1000;
+          position: absolute;
+          bottom: 100px;
+          left: 0px;
+          width: 100%;
+          text-align: center;
+          opacity: 1;
+          color: #fff;
+          font-family: 'BebasNeueRegular', 'Arial Narrow', Arial, sans-serif;
+}
+      .blk li div{
+    color:#333 !important;
+    position: absolute;
+    bottom: 30px;
+    left:50%;
+    margin:0 auto;
+    padding: 0;
+}
 
-<p>
-  <strong>Name:</strong>
-  <%= @event.name %>
-</p>
+.cb-slideshow li div h3 { 
+    font-size: 150px;
+    line-height: 150px; 
+}
+.cb-slideshow li div h4 { 
+    font-size: 80px;
+    line-height: 80px; 
+}
+.cb-slideshow li p { 
+    font-size: 40px;
+    line-height: 50px; 
+}
 
-<p>
-  <strong>From:</strong>
-  <%= @event.start_date %> <%= @event.start_time %>
-</p>
+            .cb-slideshow li:nth-child(1) span { 
+          background-image: url(<%= @event.image %>);
+          background-position:center top; 
+      }
+      
 
-<p>
-  <strong>To:</strong>
-  <%= @event.end_date %> <%= @event.end_time %>
-</p>
+          /* Animation for the slideshow images */
+/* Show at least something when animations not supported */
 
-<p>
-  <strong>Type:</strong>
-  <%= @event.event_type %>
-</p>
 
-<p>
-  <strong>Description:</strong>
-  <%= @event.description %>
-</p>
+    </style>
+    </head>
+    <body id="page" onload="setInterval(function() {window.location.reload();}, 43200000);">
+        <ul class="cb-slideshow">
+            <li class='blk'>
+              <span>image</span>
+              <div>
+                <h4><%= @event.header %></h4>
+                <h3><%= @event.name %></h3>
+                <% unless @event.event_type == (5 | 2) %>
+                  <h4><%= @event.space_time %></h4>
+                <% end %> 
+                <p><%= @event.description %></p>
+                <% if @event.event_type == 5 %>
+                  <h4><%= @event.subtext %></h4>
+                <% end %>
+              </div>
+            </li>
+        </ul>
+        <div class="container">
+        </div>
+        <div style='background-color:#fff; position:fixed; bottom: 0; width:100%; padding:20px;'><div style="position:relative; left:45%;"><%= link_to 'Edit', edit_event_path(@event), style:"background-color:green; padding:5px 10px; color:white; border-radius:5px;" %> |
+<%= link_to 'Back', events_path, class:'btn btn-primary' %></div></div>
+        <div style='background-color:#fff; position:fixed; top: 0; width:100%; padding:20px;'><div style="position:relative; left:45%;"><h4>PREVIEW</h4></div></div>
 
-<p>
-  <strong>Subtext:</strong>
-  <%= @event.subtext %>
-</p>
-
-<p>
-  <strong>Image:</strong>
-  <%= @event.image %>
-</p>
-
-<%= link_to 'Edit', edit_event_path(@event) %> |
-<%= link_to 'Back', events_path %>
+    </body>
+</html>

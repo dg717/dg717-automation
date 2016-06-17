@@ -218,13 +218,10 @@
               <div>
                 <h4><%= e.header %></h4>
                 <h3><%= e.name %></h3>
-                <% unless e.event_type = (5 | 2) %>
+                <% unless e.event_type == (5 | 2) %>
                   <h4><%= e.space_time %></h4>
                 <% end %> 
                 <p><%= e.description %></p>
-                <% if e.event_type = 5 %>
-                  <h4><%= e.subtext %></h4>
-                <% end %>
               </div>
             </li>
             <% counter += 1 %>

@@ -6,7 +6,7 @@ module API
       resource :events do 
         desc "Return events next week"
         get "", root: :events do 
-          Event.for_next_week
+          Event.for_slack
         end
       end
     end

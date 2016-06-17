@@ -1,14 +1,25 @@
 class Event < ActiveRecord::Base
   mount_uploader :image, ImageUploader
 
-  default_scope -> {where(["start_date >= ?",Date.today]).order("start_date")}
   #type ["Event",1],["Popup",2],["Happy Hour",3],["Party",4],["NewTenant",5]]
 
   def self.for_next_week
     #week = Time.now.next_week
-    week = Time.now + 2.week 
-    Rails.logger.debug "week"
-    Event.where(start_date:week.beginning_of_week..week.end_of_week, event_type:[1,3,4])
+    week = Time.now.next_week 
+    Event.where('start_date >= ?', week).where('start_date <= ?', week.end_of_week).where(event_type:[1,3,4]).order('start_date')
+  end
+
+  def self.for_board
+    #week = Time.now.next_week
+    Event.where('start_date >= ?', Date.today).order('start_date')
+  end
+
+  def self.to_show(filter,sort)
+    if filter == "current"
+      Event.where('start_date >= ?', Date.today).order(sort)
+    else 
+      Event.where('end_date <= ?', Date.today).order(sort)
+    end
   end
 
   def self.for_slack
@@ -25,9 +36,22 @@ class Event < ActiveRecord::Base
       slack_msg.to_json
       Rails.logger.debug slack_msg.to_json
     end
+    if slack_msg.empty?
+      slack_msg = "No events next week!"
+    end
     slack_msg
   end
 
+  def space_to_display
+    case space 
+      when 1
+        "Event Space"
+      when 2
+        "Pop Up Space"
+      when 3
+        "Meeting Room" 
+    end
+  end
 
   def header
     case event_type
@@ -47,11 +71,11 @@ class Event < ActiveRecord::Base
   def space_time
     case event_type
       when 1 
-        "From #{start_time.strftime("%H:%M")} - #{end_time.strftime("%H:%M")} @ #{space}"
+        "From #{start_time.strftime("%H:%M")} - #{end_time.strftime("%H:%M")} @ #{space_to_display}"
       when 3 
-        "From #{start_time.strftime("%H:%M")} - #{end_time.strftime("%H:%M")} @ #{space}"
+        "From #{start_time.strftime("%H:%M")} - #{end_time.strftime("%H:%M")} @ #{space_to_display}"
       when 4
-        "From #{start_time.strftime("%H:%M")} - #{end_time.strftime("%H:%M")} @ #{space}"
+        "From #{start_time.strftime("%H:%M")} - #{end_time.strftime("%H:%M")} @ #{space_to_display}"
     end
   end
 end

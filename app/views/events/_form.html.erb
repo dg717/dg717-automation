@@ -1,3 +1,5 @@
+<div class='row'>
+<div class='col-sm-6'>
 <%= form_for(@event) do |f| %>
   <% if @event.errors.any? %>
     <div id="error_explanation">
@@ -13,57 +15,221 @@
   <div class="form-group">
     <%= f.label :type %><br>
     <script language="javascript">
+
       function hideFlds(sel){
         $('.form-group').show();
+        //If it's a new tenant
         if(sel.value == 5){
-          $('.company').hide();
-        } else if (sel.value == 3) {
-          $('.happy').hide();
+          $('.tenant_hide').hide();
+          $('.tenant_show').show();
         } else if (sel.value == 2) {
-          $('.popup').hide();
-        }
+          $('.popup_hide').hide();
+          $('.popup_show').show();
+        } else {
+          $('.tenant_hide').show();
+          $('.popup_hide').show();
+        } 
+        formatDateSpace();
       };
+
+      function formatDateSpace(){
+        var event_type = $('#event_type option:selected').val();
+        var start_date = $('#event_start_date_2i option:selected').text().substr(0,3) + " " + $('#event_start_date_3i option:selected').val();
+        var end_date = $('#event_end_date_2i option:selected').text().substr(0,3) + " " + $('#event_end_date_3i option:selected').val();
+        var start_time = $('#event_start_time_4i option:selected').val() + ":" + $('#event_start_time_5i option:selected').val();
+        var end_time = $('#event_end_time_4i option:selected').val() + ":" + $('#event_end_time_5i option:selected').val();
+        var space = $('event_');
+
+        var header = "";
+        var show_time = "";
+
+        if (event_type == 1){
+            header = "EVENT: " + start_date;
+        } else if (event_type == 2){
+            header = "POPUP: " + start_date + " to " + end_date;
+        } else if (event_type == 3){
+            header = "HAPPY HOUR: " + start_date;
+        } else if (event_type == 4){
+            header =  "PARTY: " + start_date;
+        } else if (event_type == 5){
+            header = "NEW TENANT";
+        }
+        $('#preview_header').text(header);
+
+        if (event_type == 1 || event_type == 3 || event_type == 4){
+          show_time = start_time + ' - ' + end_time + ' @ ' + $('#event_space option:selected').text();
+          $('#preview_time').text(show_time);
+          $('#preview_time').show();
+        }
+
+      }
+
+      function changeText(frm){
+          var value = frm.value;
+          var name = frm.id;
+          if(name == 'event_name'){
+            $('#preview_name').text(value);
+          } else if (name == 'event_space'){
+            $('#preview_space').text(value);
+            formatDateSpace();
+          } else if (name == 'event_description'){
+            $('#preview_desc').text(value);
+          } else if (name == 'event_end_date'){
+            $('#preview_').text(value);
+            formatDateSpace();
+          } else {
+            formatDateSpace();
+          }
+      }
+
+      //Previewing the image uploaded
+        function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#img_prev').attr('src', e.target.result).width(300).height(150);
+                $('.cb-slideshow > li > span').css('background-image','url('+e.target.result+')');
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+      }
+
+      $(document).ready(function() {
+        hideFlds($('#event_type option:selected').val());
+      });
+
     </script>
-    <select name='event[event_type]' onchange="hideFlds(this);">
+    <select name='event[event_type]' onchange="hideFlds(this);" class="form-control" id='event_type'>
     <%= options_for_select([["Event",1],["Popup",2],["Happy Hour",3],["Party",4],["New Tenant",5]])%>
     </select>
   </div>
   <div id="fields">
   <div class="form-group">
     <%= f.label :name %><br>
-    <%= f.text_field :name %>
+    <%= f.text_field :name, class:"form-control", onKeypress:'changeText(this);', onChange:'changeText(this)'%>
   </div>
   <div class="form-group">
     <%= f.label :from %><br>
-    <%= f.date_select :start_date %> <%= f.time_select :start_time %>
+    <%= f.date_select :start_date, {}, onChange:'changeText(this)' %> <%= f.time_select :start_time, {}, onChange:'changeText(this)',class:'tenant_hide popup_hide'%>
   </div>
-  <div class="form-group company happy">
+  <div class="form-group tenant_hide">
     <%= f.label :to %><br>
-    <%= f.date_select :end_date %> <%= f.time_select :end_time,:class=>'events'%>
+    <%= f.date_select :end_date, {}, onChange:'changeText(this)'%> <%= f.time_select :end_time, {}, onChange:'changeText(this)', class:'popup_hide'%>
   </div>
-  <div class="form-group company popup">
+  <div class="form-group popup_hide tenant_hide">
     <%= f.label :space %><br>
-    <select name='type'>
-    <%= options_for_select([["EventSpace",1],["Popup",2],["MeetingRoom,3"]])%>
+    <select name='event[event_space]' class="form-control" id='event_space' onChange='changeText(this);'>
+    <%= options_for_select([["EventSpace",1],["Popup",2],["MeetingRoom",3]])%>
     </select>
   </div>
   <div class="form-group">
     <%= f.label :description %><br>
-    <%= f.text_area :description %>
-  </div>
-  <div class="form-group happy">
-    <%= f.label :subtext %><br>
-    <%= f.text_area :subtext %>
+    <%= f.text_area :description, class:"form-control", onKeypress:'changeText(this);' ,onChange:'changeText(this)'%>
   </div>
   <div class="form-group">
     <%= f.label :image %><br>
       <div class="form_controls">
-        <%= f.file_field :image %>
+        <img id='img_prev' src="http://placehold.it/300x200" alt='image' />
+        <%= f.file_field :image, onChange:'readURL(this);', class:'btn' %>
         <%= f.hidden_field(:image_cache) %>
       </div>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit class:'btn btn-primary' %>
   </div>
 </div>
 <% end %>
+  </div>
+  <div class='col-sm-6' style=" font-family: Constantia, Palatino, "Palatino Linotype", "Palatino LT STD", Georgia, serif;
+">
+     <style type="text/css">
+     @font-face {
+    font-family: 'BebasNeueRegular';
+    src: url('/fonts/BebasNeue-webfont.eot');
+    src: url('/fonts/BebasNeue-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/fonts/BebasNeue-webfont.woff') format('woff'),
+         url('/fonts/BebasNeue-webfont.ttf') format('truetype'),
+         url('/fonts/BebasNeue-webfont.svg#BebasNeueRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+     .cb-slideshow,
+.cb-slideshow:after { 
+    position: fixed;
+    width: 50%;
+    height: 100%;
+    top: 0px;
+    left: 50%;
+    z-index: 0; 
+}
+.cb-slideshow:after { 
+    content: '';
+    background: transparent url(/pattern.png) repeat top left; 
+}
+      .cb-slideshow li span { 
+          width: 100%;
+          height: 90%;
+          position: absolute;
+          top: 0px;
+          left: 0px;
+          color: transparent;
+          background-size: cover;
+          background-position: 50% 50%;
+          background-repeat: none;
+          opacity: 1;
+          z-index: 0;
+      }
+      .cb-slideshow li div { 
+          z-index: 1000;
+          position: absolute;
+          bottom: 100px;
+          left: 0px;
+          width: 100%;
+          text-align: center;
+          opacity: 1;
+          color: #fff;
+          font-family: 'BebasNeueRegular', 'Arial Narrow', Arial, sans-serif;
+}
+      .blk li div{
+    color:#333 !important;
+    position: absolute;
+    bottom: 30px;
+    left:50%;
+    margin:0 auto;
+    padding: 0;
+}
+
+.cb-slideshow li div h3 { 
+    font-size: 150px;
+    line-height: 150px; 
+}
+.cb-slideshow li div h4 { 
+    font-size: 80px;
+    line-height: 80px; 
+}
+.cb-slideshow li p { 
+    font-size: 40px;
+    line-height: 50px; 
+}
+
+            .cb-slideshow li:nth-child(1) span { 
+          background-image: url(<%= @event.image %>);
+          background-position:center top; 
+      }
+
+     </style>
+  <ul class="cb-slideshow">
+            <li class='blk'>
+              <span>image</span>
+              <div>
+                <h4 id='preview_header'><%= @event.header %></h4>
+                <h3 id='preview_name'><%= @event.name %></h3>
+                <h4 id='preview_time' class='popup_hide tenant_hide'><%= @event.space_time %></h4>
+                <p id='preview_desc'><%= @event.description %></p>
+              </div>
+            </li>
+        </ul>
+  </div>
+</div>

@@ -1,6 +1,10 @@
+<div class="row">
+<div class="col-sm-12">
 <h1>Editing event</h1>
-
+</div>
+</div>
 <%= render 'form' %>
-
-<%= link_to 'Show', @event %> |
-<%= link_to 'Back', events_path %>
+<div class="row" style='background-color:#fff; position:fixed; bottom: 0; width:100%; padding:20px;'><div style="position:relative; left:45%;">
+<%= link_to events_path, class:'btn btn-primary' do %><span class='glyphicon glyphicon-chevron-left'> Back</span><% end %>  
+<%= link_to @event, class:'btn btn-primary' do %><span class='glyphicon glyphicon-eye-open'> Show</span><% end %>
+</div></div>
